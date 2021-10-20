@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
-import MovieListContainer from '../containers/MovieListContainer';
-import MovieSharedContainer from '../containers/MovieSharedContainer';
-import ForbiddenPageContainer from '../containers/ForbiddenPageContainer';
-import TopNavigation from './TopNavigation';
-import PrivateRoute from './PrivateRoute';
+import JoiningChatRoomContainer from '../containers/JoiningChatRoomContainer';
+import MessageRoomContainer from '../containers/MessageRoomContainer';
+import PrivateRoute from '../com/PrivateRoute';
 import PageLoader from './PageLoader';
 import Popup from 'react-popup';
 
@@ -15,11 +13,9 @@ class MasterPage extends Component {
       <div className="container">
         <PageLoader />
         <Popup />
-        <TopNavigation />
         <Switch>
-          <Route path="/error" exact component={ForbiddenPageContainer} />
-          <Route path="/" exact component={MovieListContainer} />
-          <PrivateRoute path="/share" component={MovieSharedContainer} />
+          <Route path="/" exact component={JoiningChatRoomContainer} />
+          <Route path="/room" component={MessageRoomContainer} />
         </Switch>
       </div>
     );
