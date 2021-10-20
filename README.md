@@ -1,5 +1,5 @@
 # smv-project
-share movie project
+chatting application project
 
 # deploy api to heroku
 heroku git:remote -a shared-movie
