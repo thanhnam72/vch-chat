@@ -15,8 +15,8 @@
             "password": "abc1234"
         },
         "client": {
-            "name": "Android API v1",
-            "clientId": "android",
+            "name": "Web API for chatting v1",
+            "clientId": "client1",
             "clientSecret": "SomeRandomCharsAndNumbers"
         }
     }
