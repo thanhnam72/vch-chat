@@ -78,7 +78,7 @@ class MessageRoomContainer extends Component {
     this.props.dispatch(hideLoading());
 
     if(response) {
-      socket.emit('rejoin_room', { roomId: userInfo.roomId});
+      socket.emit('rejoin_room', { roomId: userInfo.roomId, userName: userInfo.userName });
 
       const messages = _.map(response.messages, msg => ({ userName: msg.userName, message: msg.content }));
 
@@ -141,12 +141,12 @@ class MessageRoomContainer extends Component {
           {
             _.map(this.state.roomMessages, (msg, idx) => {
               return msg.userName !== this.state.userName ? (
-                <div className="row" key={`msg_${idx}`}>
+                <div className="row msg-line" key={`msg_${idx}`}>
                   <p className="sender-name">{msg.userName}</p>
                   <p className="message-left">{msg.message}</p>
                 </div>
               ) : (
-                <div className="row" key={`msg_${idx}`}>
+                <div className="row msg-line" key={`msg_${idx}`}>
                   <p className="message-right">{msg.message}</p>
                 </div>
               )

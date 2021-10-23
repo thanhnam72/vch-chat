@@ -1,10 +1,9 @@
 const libs = process.cwd() + '/libs/';
 require(libs + 'db/mongoose');
-const log = require(libs + 'log')(module);
 const Room = require(libs + 'model/room');
 const RoomMessage = require(libs + 'model/roommessage');
 
-const joinRoom = async function(username, roomId) {
+const joinRoom = async function(username, roomId, sessionId) {
   try{
     let room = await Room.findOne({ userName: username});
 
@@ -31,6 +30,7 @@ const joinRoom = async function(username, roomId) {
     room = new Room({
       userName: username,
       roomId: roomId,
+      sessionId: sessionId
     });
   
     await room.save();
@@ -71,8 +71,31 @@ const addMessage = async function(username, roomId, message) {
     return true;
   } catch (err) {
     console.log(err);
-    log.error(err);
     return false;
+  }
+}
+
+const updateUserSessionInRoom = async function(username, roomId, sessionId) {
+  try{
+    let room = await Room.findOne({ userName: username });
+
+    if(room && room.sessionId !== sessionId) {
+      room.sessionId = sessionId;
+
+      await room.save();
+    } 
+
+    if(!room) {
+      room = new Room({
+        userName: username,
+        roomId: roomId,
+        sessionId: sessionId
+      });
+    
+      await room.save();
+    }
+  } catch (err) {
+    console.log(err);
   }
 }
 
@@ -84,7 +107,7 @@ const getMessagesByRoomId = async function(roomId) {
     
     return messages ? messages : [];
   } catch (err) {
-    log.error(err);
+    console.log(err);
     return null;
   }
 }
@@ -98,15 +121,29 @@ const removeUserFromRoom = async function(userName, roomId) {
     
     return resp;
   } catch (err) {
-    log.error(err);
+    console.log(err);
     return null;
   }
 }
 
+const removeUserFromRoomAfterDisconnected = async function(sessionId) {
+  try{
+    const resp = await Room.deleteOne({
+      sessionId: sessionId
+    })
+    
+    return resp;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+}
 
 module.exports = {
   joinRoom,
   getMessagesByRoomId,
   addMessage,
-  removeUserFromRoom
+  removeUserFromRoom,
+  updateUserSessionInRoom,
+  removeUserFromRoomAfterDisconnected
 }

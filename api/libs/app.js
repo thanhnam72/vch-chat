@@ -41,14 +41,15 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", function(socket) {
-  console.log('a user connected');
+  console.log('a client connected');
   
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
+  socket.on('disconnect', async () => {
+    await roomService.removeUserFromRoomAfterDisconnected(socket.id);
+    console.log('client disconnected');
   });
 
   socket.on('join_room', async (msg) => {
-    const result = await roomService.joinRoom(msg.userName, msg.roomId);
+    const result = await roomService.joinRoom(msg.userName, msg.roomId, socket.id);
 
     if(result.status) {
       socket.join(msg.roomId);
@@ -56,7 +57,8 @@ io.on("connection", function(socket) {
     socket.emit('join_room_response', result);
   });
 
-  socket.on("rejoin_room", (msg) => {
+  socket.on("rejoin_room", async (msg) => {
+    await roomService.updateUserSessionInRoom(msg.userName, msg.roomId, socket.id);
     socket.join(msg.roomId);
   })
 

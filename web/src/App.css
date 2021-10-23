@@ -202,3 +202,7 @@ button.join-btn:hover {
 ::-webkit-scrollbar-thumb:window-inactive {
   background: #e8e8e8; 
 }
+
+.msg-line {
+  margin-top: 10px;
+}

@@ -11,6 +11,11 @@ var Room = new Schema({
     unique: true,
     required: true
   },
+  sessionId: {
+    type: String,
+    unique: true,
+    required: true
+  },
 });
 
 module.exports = mongoose.model('Room', Room);
