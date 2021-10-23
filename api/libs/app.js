@@ -56,6 +56,10 @@ io.on("connection", function(socket) {
     socket.emit('join_room_response', result);
   });
 
+  socket.on("rejoin_room", (msg) => {
+    socket.join(msg.roomId);
+  })
+
   socket.on('exit_room', async (msg) => {
     const result = await roomService.removeUserFromRoom(msg.userName, msg.roomId);
 

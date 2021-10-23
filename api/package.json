@@ -15,7 +15,7 @@
     "express": "~4.10.x",
     "faker": "^2.0.x",
     "method-override": "^2.3.x",
-    "mongoose": "^4.4.x",
+    "mongoose": "^6.0.12",
     "mysql": "^2.15.0",
     "nconf": "^0.6.x",
     "oauth2orize": "^1.0.x",

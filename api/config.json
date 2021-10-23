@@ -4,7 +4,8 @@
         "tokenLife" : 3600
     },
     "mongoose": {
-        "uri": "mongodb://localhost/vch_chat"
+        "uri_local": "mongodb://localhost/vch_chat",
+        "uri": "mongodb+srv://admin:wo0Uip8Wp8f8lXZM@cluster0.a12fp.mongodb.net/vch_chat?retryWrites=true&w=majority"
     },
     "default": {
         "api": {

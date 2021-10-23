@@ -30,6 +30,13 @@ body {
   position: relative;
 }
 
+.msg-content {
+  height: 504px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0px 20px;
+}
+
 .message-right {
   display: inline-block;
   padding: 10px 10px 10px 10px;
@@ -173,4 +180,25 @@ input.msg-field:focus, input.field:focus {
 
 button.join-btn:hover {
   background: #65ae7a;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #e8e8e8; 
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: #e8e8e8; 
 }

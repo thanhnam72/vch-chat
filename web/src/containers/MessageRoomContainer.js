@@ -66,7 +66,7 @@ class MessageRoomContainer extends Component {
   async componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem('_info'));
 
-    if(!userInfo) {
+    if(!userInfo || !userInfo.userName || !userInfo.roomId) {
       this.props.history.push('/');
       return;
     }
@@ -78,6 +78,8 @@ class MessageRoomContainer extends Component {
     this.props.dispatch(hideLoading());
 
     if(response) {
+      socket.emit('rejoin_room', { roomId: userInfo.roomId});
+
       const messages = _.map(response.messages, msg => ({ userName: msg.userName, message: msg.content }));
 
       this.setState({
@@ -86,6 +88,13 @@ class MessageRoomContainer extends Component {
         roomMessages: messages
       })
     }
+    
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    console.log('update');
+    this.scrollToBottom();
   }
 
   // componentWillUnmount() {
@@ -111,6 +120,16 @@ class MessageRoomContainer extends Component {
     })
   }
 
+  onMessageKeyDown = (event) => {
+    if(event.keyCode === 13) {
+      this.sendClick();
+    }
+  }
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
+
   render() {
     return (
       <div className="msg-wrapper">
@@ -118,22 +137,34 @@ class MessageRoomContainer extends Component {
           <a href="#" className="btn-exit" onClick={this.onExit}>Exit</a>
           <h2>{this.state.roomId}</h2>
         </div>
-        {
-          _.map(this.state.roomMessages, (msg, idx) => {
-            return msg.userName !== this.state.userName ? (
-              <div className="row" key={`msg_${idx}`}>
-                <p className="sender-name">{msg.userName}</p>
-                <p className="message-left">{msg.message}</p>
-              </div>
-            ) : (
-              <div className="row" key={`msg_${idx}`}>
-                <p className="message-right">{msg.message}</p>
-              </div>
-            )
-          })
-        }
+        <div className="msg-content">
+          {
+            _.map(this.state.roomMessages, (msg, idx) => {
+              return msg.userName !== this.state.userName ? (
+                <div className="row" key={`msg_${idx}`}>
+                  <p className="sender-name">{msg.userName}</p>
+                  <p className="message-left">{msg.message}</p>
+                </div>
+              ) : (
+                <div className="row" key={`msg_${idx}`}>
+                  <p className="message-right">{msg.message}</p>
+                </div>
+              )
+            })
+          }
+          <div style={{ float:"left", clear: "both" }}
+              ref={(el) => { this.messagesEnd = el; }}>
+          </div>
+        </div>
         <div className="message-form">
-          <input type="text" className="msg-field" id="message" name="message" placeholder="Message here..." onChange={this.onHandleControl} value={this.state.message}/>
+          <input type="text" 
+            className="msg-field" 
+            id="message" 
+            name="message" 
+            placeholder="Message here..." 
+            onChange={this.onHandleControl} 
+            value={this.state.message} 
+            onKeyDown={this.onMessageKeyDown}/>
           <a className="send-btn" href="#" onClick={this.sendClick}><i className="fa fa-arrow-up"></i></a>
         </div>
       </div>
