@@ -78,7 +78,7 @@ class JoiningChatRoomContainer extends Component {
             <input id="roomId" name="roomId" placeholder="RoomID" className="field roomid-field" onChange={this.onHandleControl}/>
           </div>
         </div>
-        <div className="message-form">
+        <div className="join-btn-wraper">
           <button className="join-btn" onClick={this.onJoinClick}>Join</button>
         </div>
       </div>

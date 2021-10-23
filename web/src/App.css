@@ -97,6 +97,12 @@ body {
   width: 447px;
 }
 
+.join-btn-wraper {
+  position: absolute;
+  bottom: 273px;
+  width: 447px;
+}
+
 .msg-field {
   margin-left: -10px;
   width: 100%;
