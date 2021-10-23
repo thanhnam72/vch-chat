@@ -56,9 +56,9 @@ body {
   border-right: 12px solid transparent;
   border-bottom: 13px solid #5db075;
   transform: rotate(44deg);
-  bottom: -10px;
+  bottom: -12px;
   top: 9px;
-  right: -16px;
+  right: -20px;
 }
 
 .message-left {

@@ -93,7 +93,6 @@ class MessageRoomContainer extends Component {
   }
 
   componentDidUpdate() {
-    console.log('update');
     this.scrollToBottom();
   }
 
