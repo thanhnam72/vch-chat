@@ -92,8 +92,8 @@ body {
 }
 
 .message-form {
-  position: fixed;
-  bottom: 280px;
+  position: absolute;
+  bottom: -73px;
   width: 447px;
 }
 
