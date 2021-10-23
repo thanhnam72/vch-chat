@@ -4,7 +4,6 @@ var Schema = mongoose.Schema;
 var Room = new Schema({
   roomId: {
     type: String,
-    unique: true,
     required: true
   },
   userName: {
@@ -14,4 +13,4 @@ var Room = new Schema({
   },
 });
 
-module.exports = mongoose.model('Room', Client);
+module.exports = mongoose.model('Room', Room);

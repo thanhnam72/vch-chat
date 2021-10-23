@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import JoiningChatRoomContainer from '../containers/JoiningChatRoomContainer';
 import MessageRoomContainer from '../containers/MessageRoomContainer';
-import PrivateRoute from '../com/PrivateRoute';
 import PageLoader from './PageLoader';
 import Popup from 'react-popup';
 

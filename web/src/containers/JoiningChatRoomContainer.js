@@ -1,13 +1,39 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { hideLoading, showLoading } from "../actions/index";
+import RoomService from "../services/roomService";
+import { USER_IS_EXISTING_IN_ROOM } from "../constants/index";
 import socket from '../WebSocket';
 
 class JoiningChatRoomContainer extends Component {
+  roomService = new RoomService();
 
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      userName: '',
+      roomId: ''
+    };
+  }
+
+  componentDidMount() {
+    socket.on('join_room_response', (result) => {
+      this.props.dispatch(hideLoading());
+
+      if(result.status) {
+        localStorage.setItem("_info", JSON.stringify(result.data));
+        this.props.history.push('/room');
+        return;
+      }
+      
+      if(!result.status && result.code === USER_IS_EXISTING_IN_ROOM) {
+        alert(`userName ${this.state.userName} is exsting in another room`);
+      } else {
+        alert('Something went wrong')
+      }
+    })
   }
 
   onHandleControl = (event) => {
@@ -20,9 +46,9 @@ class JoiningChatRoomContainer extends Component {
   }
 
 
-  onJoinClick = () => {
-    if(!this.state.username) {
-      alert("Please input your username");
+  onJoinClick = async () => {
+    if(!this.state.userName) {
+      alert("Please input your userName");
       return;
     }
 
@@ -31,11 +57,11 @@ class JoiningChatRoomContainer extends Component {
       return;
     }
 
-    const { username, roomId } = this.state;
+    const { userName, roomId } = this.state;
 
-    socket.emit('join', { username, roomId });
+    this.props.dispatch(showLoading());
 
-    this.props.history.push('/room');
+    socket.emit('join_room', { userName, roomId })
   }
 
   render() {
@@ -46,7 +72,7 @@ class JoiningChatRoomContainer extends Component {
         </div>
         <div className="form-gg">
           <div className="row">
-            <input id="username" name="username" placeholder="Username" className="field usr-field" onChange={this.onHandleControl}/>
+            <input id="userName" name="userName" placeholder="Username" className="field usr-field" onChange={this.onHandleControl}/>
           </div>
           <div className="row">
             <input id="roomId" name="roomId" placeholder="RoomID" className="field roomid-field" onChange={this.onHandleControl}/>
@@ -60,4 +86,6 @@ class JoiningChatRoomContainer extends Component {
   }
 }
 
-export default JoiningChatRoomContainer;
+const mapStateToProps = state =>({})
+
+export default connect(mapStateToProps)(JoiningChatRoomContainer);

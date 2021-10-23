@@ -7,7 +7,7 @@ class PageLoader extends Component {
     const { loading } = this.props;
 
     return loading ? (
-      <div class="loader-container">
+      <div className="loader-container">
         <div className="loader">
           <img src={LoaderGif} />
         </div>

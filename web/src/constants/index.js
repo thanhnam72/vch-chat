@@ -1,0 +1,1 @@
+export const USER_IS_EXISTING_IN_ROOM = "user-is-existing-in-room";

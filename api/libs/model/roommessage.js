@@ -10,6 +10,10 @@ var Message = new Schema({
 	content: { 
     type: String,
     required: true 
+  },
+  created: {
+    type: Date,
+    default: Date.now
   }
 });
 
@@ -18,4 +22,4 @@ var RoomMessage = new Schema({
 	messages: [Message],
 });
 
-module.exports = mongoose.model('RoomMessage', Article);
+module.exports = mongoose.model('RoomMessage', RoomMessage);
