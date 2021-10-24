@@ -64,7 +64,7 @@ body {
 .message-left {
   display: inline-block;
   padding:5px 6px 8px 6px;
-  border-radius: 5px;
+  border-radius: 5px 5px 5px 0px;
   float: left;
   color:black;
   background-color:#f6f6f6;
@@ -72,18 +72,30 @@ body {
   border: 1px solid #e8e8e8;
 }
 
+.message-left:before {
+  content: "";
+  position: absolute;
+  margin-top: -6px;
+  margin-left: -7px;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-bottom: 11px solid #e8e8e8;
+  transform: rotate(-45deg);
+  top: 38px;
+  left: -1px;
+}
+
 .message-left:after {
   content: "";
   position: absolute;
   margin-top: -6px;
   margin-left: -7px;
-  border-left: 13px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 12px solid #f6f6f6;
-  transform: rotate(-47deg);
-  bottom: -10px;
-  top: 9px;
-  left: -10px; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #f6f6f6;
+  transform: rotate(-45deg);
+  top: 37px;
+  left: 1px; 
 }
 
 .sender-name {

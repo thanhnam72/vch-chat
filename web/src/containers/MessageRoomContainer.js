@@ -29,7 +29,7 @@ class MessageRoomContainer extends Component {
     })
 
     socket.on('message_response', (resp) => {
-      if(resp) {
+      if (resp) {
         const { userName, message } = this.state;
 
         this.setState({
@@ -45,7 +45,7 @@ class MessageRoomContainer extends Component {
     });
 
     socket.on('exit_room_response', (resp) => {
-      if(resp) {
+      if (resp) {
         localStorage.removeItem("_info");
         this.props.history.push("/");
       } else {
@@ -66,7 +66,7 @@ class MessageRoomContainer extends Component {
   async componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem('_info'));
 
-    if(!userInfo || !userInfo.userName || !userInfo.roomId) {
+    if (!userInfo || !userInfo.userName || !userInfo.roomId) {
       this.props.history.push('/');
       return;
     }
@@ -77,7 +77,7 @@ class MessageRoomContainer extends Component {
 
     this.props.dispatch(hideLoading());
 
-    if(response) {
+    if (response) {
       socket.emit('rejoin_room', { roomId: userInfo.roomId, userName: userInfo.userName });
 
       const messages = _.map(response.messages, msg => ({ userName: msg.userName, message: msg.content }));
@@ -88,7 +88,7 @@ class MessageRoomContainer extends Component {
         roomMessages: messages
       })
     }
-    
+
     this.scrollToBottom();
   }
 
@@ -104,7 +104,7 @@ class MessageRoomContainer extends Component {
   sendClick = () => {
     const { userName, message, roomId } = this.state;
 
-    if(!message) {
+    if (!message) {
       alert("Please input your message");
       return;
     }
@@ -113,14 +113,14 @@ class MessageRoomContainer extends Component {
   }
 
   onExit = () => {
-    socket.emit('exit_room', { 
+    socket.emit('exit_room', {
       userName: this.state.userName,
       roomId: this.state.roomId
     })
   }
 
   onMessageKeyDown = (event) => {
-    if(event.keyCode === 13) {
+    if (event.keyCode === 13) {
       this.sendClick();
     }
   }
@@ -151,19 +151,17 @@ class MessageRoomContainer extends Component {
               )
             })
           }
-          <div style={{ float:"left", clear: "both" }}
-              ref={(el) => { this.messagesEnd = el; }}>
-          </div>
+          <div style={{ float: "left", clear: "both" }} ref={(el) => { this.messagesEnd = el; }}></div>
         </div>
         <div className="message-form">
-          <input type="text" 
-            className="msg-field" 
-            id="message" 
-            name="message" 
-            placeholder="Message here..." 
-            onChange={this.onHandleControl} 
-            value={this.state.message} 
-            onKeyDown={this.onMessageKeyDown}/>
+          <input type="text"
+            className="msg-field"
+            id="message"
+            name="message"
+            placeholder="Message here..."
+            onChange={this.onHandleControl}
+            value={this.state.message}
+            onKeyDown={this.onMessageKeyDown} />
           <a className="send-btn" href="#" onClick={this.sendClick}><i className="fa fa-arrow-up"></i></a>
         </div>
       </div>
