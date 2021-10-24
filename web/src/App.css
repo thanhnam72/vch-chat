@@ -99,7 +99,7 @@ body {
 
 .join-btn-wraper {
   position: absolute;
-  bottom: 273px;
+  bottom: -73px;
   width: 447px;
 }
 
@@ -150,6 +150,8 @@ input.msg-field:focus, input.field:focus {
 
 .form-container {
   padding: 10px 20px;
+  position: relative;
+  height: 600px;
 }
 
 .bold {
