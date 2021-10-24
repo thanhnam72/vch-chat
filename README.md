@@ -1,4 +1,4 @@
-# smv-project
+# vch-project
 chatting application project
 
 # deploy api to heroku
